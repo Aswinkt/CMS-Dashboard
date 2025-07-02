@@ -28,7 +28,7 @@ A Django-based dashboard with separate login functionality for administrators an
 
 2. **Install Dependencies** (if not already installed):
    ```bash
-   pip install django
+   pip3 install -r requirements.txt
    ```
 
 3. **Run Migrations**:
