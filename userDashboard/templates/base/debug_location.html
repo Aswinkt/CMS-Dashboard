@@ -1,0 +1,153 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Debug Location{% endblock %}
+{% block page_title %}IP & WiFi Location Debug{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-bug me-2"></i>IP Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <strong>Detected IP Address:</strong>
+                    <span class="badge bg-primary">{{ ip_address }}</span>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Location Information:</strong>
+                    <ul class="list-unstyled">
+                        <li><strong>Location:</strong> {{ location_info.location }}</li>
+                        <li><strong>City:</strong> {{ location_info.city }}</li>
+                        <li><strong>Country:</strong> {{ location_info.country }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-wifi me-2"></i>WiFi Information
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if wifi_info %}
+                <div class="mb-3">
+                    <strong>WiFi Location:</strong>
+                    <ul class="list-unstyled">
+                        <li><strong>Location:</strong> {{ wifi_info.location }}</li>
+                        <li><strong>City:</strong> {{ wifi_info.city }}</li>
+                        <li><strong>Country:</strong> {{ wifi_info.country }}</li>
+                        <li><strong>Method:</strong> {{ wifi_info.method }}</li>
+                        <li><strong>Accuracy:</strong> {{ wifi_info.accuracy }}</li>
+                    </ul>
+                </div>
+                {% else %}
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    No WiFi location information available
+                </div>
+                {% endif %}
+                
+                {% if wifi_networks %}
+                <div class="mb-3">
+                    <strong>Nearby WiFi Networks ({{ wifi_networks|length }}):</strong>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>SSID</th>
+                                    <th>BSSID</th>
+                                    <th>Signal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for network in wifi_networks %}
+                                <tr>
+                                    <td>{{ network.ssid|default:"Unknown" }}</td>
+                                    <td><code>{{ network.bssid|default:"Unknown" }}</code></td>
+                                    <td>{{ network.rssi|default:"Unknown" }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-info-circle me-2"></i>Request Meta Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key, value in request_meta.items %}
+                            <tr>
+                                <td><code>{{ key }}</code></td>
+                                <td><code>{{ value }}</code></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-lightbulb me-2"></i>Location Detection Methods
+                </h5>
+            </div>
+            <div class="card-body">
+                <h6>Detection Priority:</h6>
+                <ol>
+                    <li><strong>WiFi-based Location</strong> - Most accurate for local networks</li>
+                    <li><strong>IP Geolocation Services</strong> - Online services (ipapi.co, ip-api.com, etc.)</li>
+                    <li><strong>Offline IP Database</strong> - Fallback for known IPs</li>
+                    <li><strong>Public IP Detection</strong> - When local IP is private</li>
+                </ol>
+                
+                <h6>Troubleshooting Tips:</h6>
+                <ul>
+                    <li><strong>Localhost IP (127.0.0.1):</strong> Will show "Local Development"</li>
+                    <li><strong>Private IPs:</strong> May show "Private Network" or try public IP</li>
+                    <li><strong>WiFi Networks:</strong> Need at least 3 networks for accurate location</li>
+                    <li><strong>VPN/Proxy:</strong> May show different location than actual</li>
+                    <li><strong>Network Issues:</strong> Geolocation services may be blocked</li>
+                </ul>
+                
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Note:</strong> This debug page is only accessible to administrators and should be removed in production.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
