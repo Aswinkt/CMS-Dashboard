@@ -21,10 +21,10 @@ A Django-based dashboard with separate login functionality for administrators an
 ## Setup Instructions
 
 1. **Create a Virtual Environment**:
-```bash
-python3 -m venv env
-source env/bin/activate  
-```
+    ```bash
+    python3 -m venv env
+    source env/bin/activate  
+    ```
 
 2. **Install Dependencies** (if not already installed):
    ```bash
