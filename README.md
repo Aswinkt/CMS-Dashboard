@@ -20,10 +20,11 @@ A Django-based dashboard with separate login functionality for administrators an
 
 ## Setup Instructions
 
-1. **Activate Virtual Environment**:
-   ```bash
-   source ../env/bin/activate
-   ```
+1. **Create a Virtual Environment**:
+```bash
+python3 -m venv env
+source env/bin/activate  
+```
 
 2. **Install Dependencies** (if not already installed):
    ```bash
@@ -32,18 +33,18 @@ A Django-based dashboard with separate login functionality for administrators an
 
 3. **Run Migrations**:
    ```bash
-   python manage.py makemigrations
-   python manage.py migrate
+   python3 manage.py makemigrations
+   python3 manage.py migrate
    ```
 
 4. **Create Superuser** (if not already created):
    ```bash
-   python manage.py createsuperuser
+   python3 manage.py createsuperuser
    ```
 
 5. **Start Development Server**:
    ```bash
-   python manage.py runserver
+   python3 manage.py runserver
    ```
 
 ## Usage
